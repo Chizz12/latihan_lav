@@ -34,7 +34,13 @@ class PostController extends Controller
 
     public function edit($id){
         $post = Post::whereId($id)->first();
-        $categories = Category::all();
-        return view('posts.edit', compact('categories', 'post'));
+        $category = Category::all();
+        return view('posts.edit', compact('category', 'post'));
+    }
+
+    public function destroy($id){
+        $post = Post::find($id);
+        $post->delete();
+        return redirect('/dashboard/post');
     }
 }
