@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -21,9 +22,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/', [BlogController::class, 'welcome'])->name('welcome');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('show');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('dashboard')->group(function() {
+Route::prefix('dashboard')->group(function () {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/category', [CategoryController::class, 'index']);
@@ -45,5 +49,4 @@ Route::prefix('dashboard')->group(function() {
     Route::get('/post/edit/{id}', [PostController::class, 'edit'])->name('posts.edit');
     Route::patch('/post/update/{id}', [PostController::class, 'update'])->name('posts.edit.update');
     Route::get('/post/delete/{id}', [PostController::class, 'destroy'])->name('posts.index.destroy');
-
 });
